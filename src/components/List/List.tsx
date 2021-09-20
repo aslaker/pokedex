@@ -1,16 +1,28 @@
 import React from "react";
 
 interface ListProps {
-  items: { name: string }[];
+  items: { name: string; url: string }[];
+  onItemClick?: (id: string) => void;
 }
 
-const List = ({ items }: ListProps) => {
+const List = ({ items, onItemClick }: ListProps) => {
+  const getIdFromUrl = (url: string) => {
+    const id = url[url.length - 2];
+    return id;
+  };
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
       <ul className="flex flex-col w-full divide divide-y">
-        {items.map((item) => {
+        {items.map((item, index) => {
           return (
-            <li className="flex flex-row justify-center items-center select-none cursor-pointer p-4">
+            <li
+              className="flex flex-row justify-center items-center select-none cursor-pointer p-4"
+              onClick={
+                onItemClick
+                  ? () => onItemClick(getIdFromUrl(item.url))
+                  : () => null
+              }
+            >
               <div className="font-medium dark:text-white">{item.name}</div>
             </li>
           );
