@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Pokemon } from "../types/Pokemon";
 
 interface ApiListResponse {
   count: number;
@@ -6,8 +7,6 @@ interface ApiListResponse {
   previous: string;
   results: { name: string; url: string }[];
 }
-
-interface Pokemon {}
 
 export const pokemonApi = createApi({
   reducerPath: "pokemonApi",

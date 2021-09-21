@@ -5,13 +5,17 @@ import List from "../../components/List/List";
 
 const Pokemon = () => {
   const history = useHistory();
-  const { data } = useGetPokemonQuery({ limit: 5, page: 1 });
+  const { data } = useGetPokemonQuery({ limit: 20, page: 1 });
 
   const onPokemonSelect = (id: string) => {
     history.push(`/pokemon/${id}`);
   };
 
-  return <List items={data?.results || []} onItemClick={onPokemonSelect} />;
+  return (
+    <div className="w-full h-full overflow-y-scroll">
+      <List items={data?.results || []} onItemClick={onPokemonSelect} />
+    </div>
+  );
 };
 
 export default Pokemon;

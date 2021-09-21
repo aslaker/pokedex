@@ -7,8 +7,13 @@ interface ListProps {
 
 const List = ({ items, onItemClick }: ListProps) => {
   const getIdFromUrl = (url: string) => {
-    const id = url[url.length - 2];
-    return id;
+    const regex = /(?<=\/)(100|[1-9]?[0-9])(?=\/$)/;
+    const found = url.match(regex);
+
+    if (!found) {
+      throw new Error("Regex failed");
+    }
+    return found[0];
   };
   return (
     <div className="container flex flex-col mx-auto w-full items-center justify-center bg-white dark:bg-gray-800 rounded-lg shadow">
