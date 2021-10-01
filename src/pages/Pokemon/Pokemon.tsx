@@ -2,10 +2,14 @@ import React from "react";
 import { useHistory } from "react-router";
 import { useGetPokemonQuery } from "../../api/pokemonApi";
 import List from "../../components/List/List";
+import Loading from "../../components/Loading/Loading";
 
 const Pokemon = () => {
   const history = useHistory();
-  const { data } = useGetPokemonQuery({ limit: 20, page: 1 });
+  const { data, isLoading } = useGetPokemonQuery(
+    { limit: 20, page: 1 },
+    { pollingInterval: 10000 }
+  );
 
   const onPokemonSelect = (id: string) => {
     history.push(`/pokemon/${id}`);
@@ -13,7 +17,11 @@ const Pokemon = () => {
 
   return (
     <div className="w-full h-full overflow-y-scroll">
-      <List items={data?.results || []} onItemClick={onPokemonSelect} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <List items={data?.results || []} onItemClick={onPokemonSelect} />
+      )}
     </div>
   );
 };
